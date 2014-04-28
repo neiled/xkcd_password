@@ -10,5 +10,7 @@ end
 
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
-  app.name = 'xkcd_password'
+  app.name = 'Memorable Passwords'
+  app.version = "1.0"
+  app.identifier = "com.plasticwater.memorablepasswordapp"
 end

@@ -5,3 +5,4 @@ gem 'rake'
 
 gem 'motion-calabash'
 gem 'bubble-wrap'
+gem 'sugarcube', :require => 'sugarcube-classic'

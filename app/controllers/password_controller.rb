@@ -8,30 +8,49 @@ class PasswordController < UIViewController
     super
 
     self.view.backgroundColor = UIColor.whiteColor
+    self.title = "New Password"
 
-    @label = UILabel.alloc.initWithFrame(CGRectZero)
-    @label.text = "Password goes here..."
-    @label.sizeToFit
-    @label.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)
-    self.view.addSubview @label
+    generate_labels
+    generate_password
 
-    @button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+    @button = UIButton.rounded_rect
     @button.setTitle("Generate", forState: UIControlStateNormal)
     @button.sizeToFit
     @button.frame = CGRect.new([125,500], @button.frame.size)
     self.view.addSubview @button
     
     @button.addTarget(self, action: 'generate_password', forControlEvents: UIControlEventTouchUpInside)
+
+    help_button = UIBarButtonItem.alloc.initWithTitle("Help", style: UIBarButtonItemStylePlain, target: self, action: 'load_help')
+    self.navigationItem.rightBarButtonItem = help_button
+  end
+
+  def load_help
+    help_controller = HelpController.alloc.initWithNibName(nil, bundle: nil)
+    self.navigationController.pushViewController(help_controller, animated: true)
   end
 
   def generate_password
-    @label.text = get_random_password
-    @label.sizeToFit
-    @label.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)
+    @labels.each_with_index { |label,i|
+      label.text = get_random_password
+      label.fit_to_size(40)
+      label.center = CGPointMake(self.view.frame.size.width / 2, (i*75) + 150)
+    }
+
   end
 
   def get_random_password
-    "#{word_list.sample} #{word_list.sample} #{word_list.sample} #{word_list.sample}"
+    "#{word_list.sample}"
+  end
+
+  def generate_labels
+    @labels = []
+    for i in 0..3
+      label = UILabel.alloc.initWithFrame([[0,0],[self.view.frame.size.width,50]])
+      label.textAlignment = NSTextAlignmentCenter
+      self.view.addSubview label
+      @labels[i] = label
+    end
   end
 
 
